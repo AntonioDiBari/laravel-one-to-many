@@ -8,6 +8,14 @@
 
 @section('content')
     <div class="container mt-3">
+        <div class="container alert-container">
+            @if (session('message'))
+                <div class="alert {{ session('type') }} alert-dismissible my-2">
+                    {{ session('message') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+        </div>
         <div class="row g-2">
             @forelse ($projects as $project)
                 <div class="col-12">
@@ -22,8 +30,19 @@
                                     <a href="#" class="text-secondary-emphasis">{{ $project->link_github }}</a>
                                 </li>
                             </ul>
-                            <div class="me-2 mt-2"><a href="{{ route('admin.projects.edit', $project) }}"><i
-                                        class="fa-solid fa-pen-to-square"></i></a></div>
+                            <div class="me-2 mt-2">
+                                <a href="{{ route('admin.projects.edit', $project) }}">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                                <form method="POST" action="{{ route('admin.projects.destroy', $project) }}"
+                                    class="mt-1">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-link text-danger p-0"><i
+                                            class="fa-solid fa-trash-can"></i></button>
+                                </form>
+
+                            </div>
                         </div>
                     </div>
                 </div>

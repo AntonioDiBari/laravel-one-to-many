@@ -46,7 +46,9 @@ class ProjectController extends Controller
         $project->fill($project_data);
         $project->save();
 
-        return redirect()->route("admin.projects.show", $project);
+        return redirect()->route("admin.projects.index")
+            ->with("message", "Project added successfully")
+            ->with("type", "alert-success");
     }
 
     /**
@@ -84,7 +86,9 @@ class ProjectController extends Controller
         $project_data = $request->all();
         $project->update($project_data);
 
-        return redirect()->route('admin.projects.show', $project);
+        return redirect()->route('admin.projects.index')
+            ->with("message", "Project updated successfully")
+            ->with("type", "alert-info");
     }
 
     /**
@@ -95,7 +99,10 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        $project->delete();
+        return redirect()->route('admin.projects.index')
+            ->with("message", "Project deleted successfully")
+            ->with("type", "alert-danger");
     }
 
     private function validate_form($request, $id = null)
