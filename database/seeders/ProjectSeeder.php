@@ -19,8 +19,8 @@ class ProjectSeeder extends Seeder
         for ($i = 0; $i < 50; $i++) {
             $project = new Project;
 
-            $project->name_project = $faker->words(3, true);
-            $project->author = $faker->firstNameMale() . $faker->lastName();
+            $project->name = $faker->words(3, true);
+            $project->author = $faker->firstNameMale() . " " . $faker->lastName();
             $project->link_github = $faker->url();
             $project->description = $faker->paragraphs(2, true);
 
