@@ -17,7 +17,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::paginate(25);
+        $projects = Project::paginate(6);
         return view('admin.projects.index', compact('projects'));
     }
 
@@ -28,7 +28,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.projects.create');
     }
 
     /**
@@ -39,7 +39,14 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate_form($request);
+        $project_data = $request->all();
+        $project = new Project;
+
+        $project->fill($project_data);
+        $project->save();
+
+        return redirect()->route("admin.projects.show", $project);
     }
 
     /**
@@ -85,5 +92,20 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         //
+    }
+
+    private function validate_form($request, $id = null)
+    {
+        $request->validate([
+            'name' => 'required|string|max:100',
+            'author' => 'required|string|max:100',
+            'link_github' => 'required|url',
+            'description' => 'nullable|min:3|max:1000'
+        ], [
+            'name.required' => 'Il titolo è obbligatorio',
+            'author.required' => "L'autore' è obbligatoria",
+            'link_github.required' => 'Il link è obbligatorio',
+            'link_github.url' => 'Il campo deve essere un link',
+        ]);
     }
 }

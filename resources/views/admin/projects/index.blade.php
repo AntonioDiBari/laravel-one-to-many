@@ -21,6 +21,8 @@
                 Nessun Progetto
             @endforelse
         </div>
+        <div class="d-flex justify-content-between my-3">{{ $projects->links() }}
+            <a href="{{ route('admin.projects.create') }}">Add a Project</a>
+        </div>
     </div>
-    <div class="d-flex justify-content-center my-3">{{ $projects->links() }}</div>
 @endsection
