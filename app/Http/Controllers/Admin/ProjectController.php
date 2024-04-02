@@ -68,7 +68,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        //
+        return view('admin.projects.edit', compact('project'));
     }
 
     /**
@@ -80,7 +80,11 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+        $this->validate_form($request, $project->id);
+        $project_data = $request->all();
+        $project->update($project_data);
+
+        return redirect()->route('admin.projects.show', $project);
     }
 
     /**
@@ -103,7 +107,7 @@ class ProjectController extends Controller
             'description' => 'nullable|min:3|max:1000'
         ], [
             'name.required' => 'Il titolo è obbligatorio',
-            'author.required' => "L'autore' è obbligatoria",
+            'author.required' => "L'autore' è obbligatorio",
             'link_github.required' => 'Il link è obbligatorio',
             'link_github.url' => 'Il campo deve essere un link',
         ]);
