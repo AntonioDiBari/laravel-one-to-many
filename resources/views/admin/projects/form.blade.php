@@ -53,6 +53,19 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
+                <div class="col-5">
+                    <label for="type_id" class="form-label">Type</label>
+                    <select name="type_id" id="type_id" class="form-select  @error('type_id') is-invalid @enderror">
+                        <option value="" class="d-none">Select a type</option>
+                        @foreach ($types as $type)
+                            <option {{ old('type_id', $project->type_id) == $type->id ? 'selected' : '' }}
+                                value="{{ $type->id }}">{{ $type->name }}</option>
+                        @endforeach
+                    </select>
+                    @error('type_id')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
                 <div class="col-12">
                     <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"
                         rows="4" placeholder="Insert project's description">{{ old('description') ?? $project->description }}</textarea>

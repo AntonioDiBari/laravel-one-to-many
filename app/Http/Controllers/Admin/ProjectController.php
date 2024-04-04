@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 
 use App\Models\Project;
+use App\Models\Type;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -28,8 +29,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        $types = Type::all();
         $project = new Project;
-        return view('admin.projects.form', compact('project'));
+        return view('admin.projects.form', compact('project', 'types'));
     }
 
     /**
@@ -71,7 +73,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('admin.projects.form', compact('project'));
+        $types = Type::all();
+        return view('admin.projects.form', compact('project', 'types'));
     }
 
     /**
@@ -112,12 +115,15 @@ class ProjectController extends Controller
             'name' => 'required|string|max:100',
             'author' => 'required|string|max:100',
             'link_github' => 'required|url',
-            'description' => 'nullable|min:3|max:1000'
+            'description' => 'nullable|min:3|max:1000',
+            'type_id' => 'required|exists:types,id'
         ], [
             'name.required' => 'Il titolo è obbligatorio',
             'author.required' => "L'autore' è obbligatorio",
             'link_github.required' => 'Il link è obbligatorio',
             'link_github.url' => 'Il campo deve essere un link',
+            'type_id.required' => 'Il campo seleziona è obbligatorio',
+            'type_id.exists' => 'Il campo selezionato non è presente'
         ]);
     }
 }
