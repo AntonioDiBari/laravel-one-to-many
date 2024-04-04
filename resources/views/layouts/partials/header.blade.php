@@ -15,9 +15,20 @@
                         <li class="nav-item">
                             <a @class([
                                 'nav-link',
-                                'active' => Route::currentRouteName() == 'admin.projects.index',
+                                'active' =>
+                                    Route::currentRouteName() == 'admin.projects.index' ||
+                                    Route::currentRouteName() == 'admin.projects.show',
                             ]) aria-current="page"
                                 href="{{ route('admin.projects.index') }}">Projects</a>
+                        </li>
+                        <li class="nav-item">
+                            <a @class([
+                                'nav-link',
+                                'active' =>
+                                    Route::currentRouteName() == 'admin.types.index' ||
+                                    Route::currentRouteName() == 'admin.types.show',
+                            ]) aria-current="page"
+                                href="{{ route('admin.types.index') }}">Types</a>
                         </li>
                     @endauth
 
