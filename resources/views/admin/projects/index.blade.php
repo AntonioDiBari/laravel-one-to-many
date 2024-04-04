@@ -29,6 +29,11 @@
                                 <li>
                                     <a href="#" class="text-secondary-emphasis">{{ $project->link_github }}</a>
                                 </li>
+                                <li>
+                                    {{ $project->type->name }}
+                                </li>
+
+
                             </ul>
                             <div class="me-2 mt-2">
                                 <a href="{{ route('admin.projects.edit', $project) }}">
