@@ -21,7 +21,10 @@
                 <div class="card bg-secondary-subtle p-3">
                     <span class="mb-2 subtitle">Description of the project:</span>
                     <p>{{ $project->description }}</p>
-                    <b>Tipo progetto: </b> {{ $project->type->name }}
+                    <b>Tipo progetto: </b>
+                    <div class="mx-1">
+                        <span style="background-color:{{ $project->type->color }} ">{{ $project->type->name }}</span>
+                    </div>
                 </div>
             </div>
         </div>

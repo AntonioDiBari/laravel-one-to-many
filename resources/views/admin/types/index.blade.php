@@ -34,13 +34,10 @@
                                 <a href="{{ route('admin.types.edit', $type) }}">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
-                                <form method="POST" action="{{-- {{ route('admin.projects.destroy', $project) }} --}}" class="mt-1">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-link text-danger p-0"><i
-                                            class="fa-solid fa-trash-can"></i></button>
-                                </form>
-
+                                <button type="button" class="btn btn-link text-danger p-0" data-bs-toggle="modal"
+                                    data-bs-target="#delete-{{ $type->id }}-type">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -54,4 +51,33 @@
             <a href="{{ route('admin.types.create') }}">Add a Type</a>
         </div>
     </div>
+@endsection
+
+@section('modal')
+    @foreach ($types as $type)
+        <div class="modal fade" id="delete-{{ $type->id }}-type" tabindex="-1"
+            aria-labelledby="delete-{{ $type->id }}-type" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="delete-{{ $type->id }}-type">Eliminate {{ $type->name }}?
+                        </h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Deleting this type will delete <b class="text-danger">all the related projects with this type</b>.
+                        Are you sure ?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <form method="POST" action="{{ route('admin.types.destroy', $type) }}" class="mt-1">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 @endsection

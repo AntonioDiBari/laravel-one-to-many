@@ -61,7 +61,9 @@ class TypeController extends Controller
      */
     public function show(Type $type)
     {
-        return view('admin.types.show', compact('type'));
+        // Per avere la paginazione nella show dei type
+        $related_projects = $type->projects()->paginate(5);
+        return view('admin.types.show', compact('type', 'related_projects'));
     }
 
     /**
@@ -104,7 +106,14 @@ class TypeController extends Controller
      */
     public function destroy(Type $type)
     {
-        //
+        foreach ($type->projects as $project) {
+            $project->delete();
+        }
+
+        $type->delete();
+        return redirect()->route('admin.types.index')
+            ->with("message", "Type deleted successfully")
+            ->with("type", "alert-danger");
     }
     private function validate_form($request, $id = null)
     {

@@ -28,5 +28,32 @@
                 <i class="fa-regular fa-circle-left"></i> Back to Types
             </a>
         </div>
+        <h4>Related Projects</h4>
+        <table class="table">
+            <thead>
+                <th>ID</th>
+                <th>Name</th>
+                <th></th>
+            </thead>
+            <tbody>
+                @foreach ($related_projects as $project)
+                    <tr>
+                        <td>{{ $project->id }}</td>
+                        <td><a href="{{ route('admin.projects.show', $project) }}">{{ $project->name }}</a></td>
+                        <td>
+                            <a href="{{ route('admin.projects.edit', $project) }}">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+                            <form method="POST" action="{{ route('admin.projects.destroy', $project) }}">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-link text-danger p-0"><i class="fa-solid fa-trash-can"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+        <div>{{ $related_projects->links() }}</div>
     </div>
 @endsection
